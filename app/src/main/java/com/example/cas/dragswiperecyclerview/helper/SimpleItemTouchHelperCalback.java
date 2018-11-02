@@ -5,8 +5,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class SimpleItemTouchHelperCalback extends ItemTouchHelper.Callback {
 
+    //constants
+    private final ItemTouchHelperAdapter mAdapter;
+
     //constructor
-    public SimpleItemTouchHelperCalback() {
+    public SimpleItemTouchHelperCalback(ItemTouchHelperAdapter adapter) {
+        mAdapter=adapter;
     }
 
     //required to be overridden
@@ -20,12 +24,14 @@ public class SimpleItemTouchHelperCalback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        return false;
+
+        mAdapter.onItemMove(viewHolder.getAdapterPosition(),target.getAdapterPosition())
+        return true;
     }
 
     //helpers
